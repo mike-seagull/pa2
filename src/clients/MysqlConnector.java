@@ -122,7 +122,7 @@ public class MysqlConnector {
 			System.out.println("Cannot create DB: "+ db +" on MySQL Server. Is it running?");
 		}
 	}
-	public void createCustomer(String first, String last, String phonenumber, String address, String city, String state, String zip) throws SQLException {
+	public String createCustomer(String first, String last, String phonenumber, String address, String city, String state, String zip) throws SQLException {
 		String sql = "INSERT INTO `pa1_michaelhollister`.`customers` (`first_name`, `last_name`, `phonenumber`, `address`, `city`, `state`, `zip`) VALUES (?, ?, ?, ?, ?, ?, ?);";
 		ps = conn.prepareStatement(sql);
 		ps.setString(1, first);
@@ -133,7 +133,26 @@ public class MysqlConnector {
 		ps.setString(6, state);
 		ps.setString(7, zip);
 		ps.execute();
-
+		
+		Map<String, String> data = new HashMap<String, String>();
+		sql = "SELECT id FROM customers " + 
+				"WHERE first_name = ? AND last_name = ? AND phonenumber = ? " +
+				"AND address = ? AND city = ? AND state = ? AND zip = ?";
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, first);
+		ps.setString(2, last);
+		ps.setString(3, phonenumber);
+		ps.setString(4, address);
+		ps.setString(5, city);
+		ps.setString(6, state);
+		ps.setString(7, zip);
+		rs = ps.executeQuery();
+		
+		String customerId = "-99";
+		while(rs.next()) {
+			customerId = Integer.toString(rs.getInt("id"));
+		}
+		return customerId;
 	}
 	public void reserveRoom(int customerId, int roomNumber) throws SQLException {
 		ps = conn.prepareStatement("UPDATE `pa1_michaelhollister`.`rooms` SET `current_occupent`=? WHERE `number`=?;");

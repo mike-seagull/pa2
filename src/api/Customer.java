@@ -72,12 +72,19 @@ public class Customer extends HttpServlet {
 		String city = request.getParameter("city"); 
 		String state = request.getParameter("state");
 		String zip = request.getParameter("zip");
+		String customerId = "";
 		try {
-			sql.createCustomer(first, last, phonenumber, address, city, state, zip);
+			customerId = sql.createCustomer(first, last, phonenumber, address, city, state, zip);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		// return as json
+		JSONObject json = new JSONObject("{\"customerId\":\"" + customerId +"\"}") ;
+    	response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+        out.println(json.toString());
+        out.close();
 	}
 
 }
