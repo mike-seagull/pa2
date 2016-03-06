@@ -44,7 +44,8 @@ public class Room extends HttpServlet {
 		/*
 		 * Returns a list of all rooms currently occupied by a customer. Include the customer first name/last name in the output.
 		 */
-		String occupied = request.getParameter("occupied");
+		String occupied = request.getPathInfo();
+		occupied = occupied.substring(1); // remove the slash
 		List<Map<String, String>> rooms = new ArrayList<Map<String, String>>();
 
 		// get vacant rooms by default

@@ -48,7 +48,7 @@ public class MysqlConnector {
 								"`id` INT NOT NULL AUTO_INCREMENT," +
 								"`first_name` VARCHAR(45) NOT NULL," +
 								"`last_name` VARCHAR(45) NOT NULL," +
-								"`phonenumber` VARCHAR(10) NOT NULL," +
+								"`phonenumber` VARCHAR(15) NOT NULL," +
 								"`address` VARCHAR(254) NOT NULL," +
 								"`city` VARCHAR(254) NOT NULL," +
 								"`state` VARCHAR(254) NOT NULL," +

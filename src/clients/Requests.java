@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 
 public class Requests {
 	String requesturl;
@@ -14,11 +16,15 @@ public class Requests {
 		this.requesturl = requesturl;
 	}
 	public Requests() {
-		 requesturl = "http://localhost:8080/";
+		 requesturl = "http://localhost:8080";
 	}
-	public String get(String id) throws IOException {
-		//Read from Servlet
-		URL url = new URL( requesturl+id );
+	public String get(String param) throws IOException {
+		String requestWithParams = requesturl;
+		if (!param.equals("") && param!=null) {
+			requestWithParams += "/"+param;
+		}
+		URL url = new URL(requestWithParams);
+
 		HttpURLConnection conn= (HttpURLConnection) url.openConnection();   
 		conn.setInstanceFollowRedirects( false );
 		conn.setRequestMethod( "GET" );
@@ -32,8 +38,18 @@ public class Requests {
 		conn.disconnect();
 		return resp.toString();
 	}
-	public String post(String id, String msg) throws IOException {
-		String urlParameters = "id="+id+"&message=\""+msg+"\"";		
+	public String post(HashMap<String, String> params) throws IOException {
+		String urlParameters = "";
+		int count = 1;
+		for (HashMap.Entry<String, String> entry : params.entrySet()) {
+		    String key = entry.getKey().toString();
+		    String value = entry.getValue().toString();
+		    if (count < params.size() && count != 1) {
+		    	urlParameters += "&";
+		    }
+		    urlParameters += key+"="+value;
+		    count++;
+		}
 		URL url = new URL(requesturl);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("POST");
@@ -52,8 +68,12 @@ public class Requests {
 		conn.disconnect();
 		return response.toString();
 	}
-	public String delete(String id) throws IOException, MalformedURLException{
-		URL  url = new URL(requesturl+id);
+	public String delete(String param) throws IOException, MalformedURLException{
+		String requestWithParams = requesturl;
+		if (!param.equals("") && param!=null) {
+			requestWithParams += "/"+param;
+		}
+		URL url = new URL(requestWithParams);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 	    conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 	    conn.setRequestMethod("DELETE");
@@ -68,9 +88,18 @@ public class Requests {
 	    conn.disconnect();
 		return response.toString();
 	}
-	public String put(String id, String msg) throws IOException {
-		String urlParameters = "id="+id+"&message=\""+msg+"\"";		
-		URL url = new URL(requesturl);
+	public String put(HashMap<String, String> params) throws IOException {
+		String urlParameters = "";
+		int count = 1;
+		for (HashMap.Entry<String, String> entry : params.entrySet()) {
+		    String key = entry.getKey().toString();
+		    String value = entry.getValue().toString();
+		    if (count < params.size() && count != 1) {
+		    	urlParameters += "&";
+		    }
+		    urlParameters += key+"="+value;
+		    count++;
+		}		URL url = new URL(requesturl);
 		HttpURLConnection con = (HttpURLConnection) url.openConnection();
 		con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 		con.setRequestMethod("PUT");
