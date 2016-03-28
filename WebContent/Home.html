@@ -42,10 +42,10 @@
 	<h2>Customer Information</h2>
 	<div class="page-header">
 	<h1>
-	<form class="form-inline" role="form">
+	<form class="form-inline" role="form" id="customerForm">
 		<div class="form-group">
 			<label><h2>First Name: </h2></label>
-			<input type="text" class="form-control" name = "firstname" id="fname"/>
+			<input type="text" class="form-control" name = "firstname"/>
 		</div>
 		<br>
 		<div class="form-group">
@@ -79,7 +79,7 @@
 			<input type="text" class="form-control" name = "billzip" />
 		</div>
 		<br>
-		<button id="submitButton" type="submit" class="btn btn-success">Submit</button>
+		<button id="submitButton" type="submit" class="btn btn-success" onSubmit="function()">Submit</button>
 	</form>
 	</h1>
 <div>
@@ -90,6 +90,8 @@
 </p>	
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    
+    <script src="js/request.js"></script>
 	
 <div class="navbar navbar-inverse navbar-fixed-bottom">
 </div>
