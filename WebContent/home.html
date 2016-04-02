@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hotel Reservation System</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/custom.css" rel="stylesheet">
+	
+  </head>
+  <body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container-fluid">
+		<button type="button" class="navbar-toggle"
+			data-toggle="collapse"
+			data-target=".navbar-collapse">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+		<a class="navbar-brand">Hotel Reservation System</a>
+		<div class="navbar-collapse collapse">
+			 <ul class="nav nav-tabs">
+				<li class="active"><a data-toggle="tab" href="#home">CREATE CUSTOMER</a></li>
+				<li><a data-toggle="tab" href="#menu1">RESERVE ROOM</a></li>
+				<li><a data-toggle="tab" href="#menu2">GET CUSTOMER BY ID</a></li>
+				<li><a data-toggle="tab" href="#menu3">GET CUSTOMER BY NAME</a></li>
+				<li><a data-toggle="tab" href="#menu4">GET CURRENT CUSTOMERS</a></li>
+				<li><a data-toggle="tab" href="#menu5">GET TRANSACTIONS</a></li>
+				<li><a data-toggle="tab" href="#menu6">GET VACANCIES</a></li>
+				<li><a data-toggle="tab" href="#menu7">GET RESERVATIONS</a></li>
+			</ul>
+		<div>
+   </div>
+ </nav>
+
+
+<div class="tab-content">
+  <div id="home" class="tab-pane fade in active">
+    <h3>CREATE CUSTOMER</h3>
+	
+	<form class="form-inline" role="form">
+		<div>
+			<label>First Name:</label>
+			<input type="text" class="form-control" name = "firstname" id="fname"/>
+		</div>
+		<br>
+		<div>
+			<label>Last Name:</label>
+			<input type="text" class="form-control" name = "lastname" />
+		</div>
+		<br>
+		<div>
+			<label>Phone No:</label>
+			<input type="text" class="form-control" name = "phnum" />
+		</div>
+		<br>
+		<div>
+			<label>Billing Addr:</label>
+			<input type="text" class="form-control" name = "biiladdr" />
+		</div>
+		<br>
+		<div>
+			<label>Billing City:</label>
+			<input type="text" class="form-control" name = "billcity" />
+		</div>
+		<br>
+		<div>
+			<label>Billing State:</label>
+			<input type="text" class="form-control" name = "billstate" />
+		</div>
+		<br>
+		
+		<div>
+			<label>Billing Zip:</label>
+			<input type="text" class="form-control" name = "billzip" />
+		</div>
+		<br>
+		<button id="submitButton" type="submit" class="btn btn-success" onsubmit="customerdetails();">Submit</button>
+	</form>
+  </div>
+  
+  <div id="menu1" class="tab-pane fade">
+  <h3>RESERVE ROOM</h3>
+	
+			<form class="form-inline" role="form">
+				<div>
+					<label>Customer ID:</label>
+					<input type="text" class="form-control" name = "custId" />
+				</div>
+				<br>
+				<div>
+					<label>Room No:</label>
+					<input type="text" class="form-control" name = "roomNum" />
+				</div>	
+				<button id="submitButton" type="submit" class="btn btn-success" onsubmit="customerdetails();">Submit</button>
+			</form>
+
+</div>
+
+  <div id="menu2" class="tab-pane fade">
+	<h3>GET CUSTOMER BY ID</h3>
+	<form class="form-inline" role="form">
+		<div>
+			<label>Customer ID:</label>
+			<input type="text" class="form-control" name = "customerId"/>
+		</div>
+		<button id="submitButton" type="submit" class="btn btn-success">Get</button>
+	</form>
+	
+  </div>
+  <div id="menu3" class="tab-pane fade">
+	<h3>GET CUSTOMER BY NAME</h3>
+	<form class="form-inline" role="form">
+		<div>
+			<label>Enter Name to search:</label>
+			<input type="text" class="form-control" name = "firstname" id="fname"/>
+		</div>
+		<br>
+		<button id="submitButton" type="submit" class="btn btn-success">Get</button>
+	</form>
+	
+  </div>
+   <div id="menu4" class="tab-pane fade">
+	<h3>GET CURRENT CUSTOMERS</h3>
+	<form class="form-inline" role="form">
+		<button id="submitButton" type="submit" class="btn btn-success">Get</button>
+	</form>
+	
+  </div>
+   <div id="menu5" class="tab-pane fade">
+	<h3>GET TRANSACTIONS</h3>
+	<form class="form-inline" role="form">
+		<button id="submitButton" type="submit" class="btn btn-success">Get</button>
+	</form>
+	
+  </div>
+   <div id="menu6" class="tab-pane fade">
+	<h3>GET VACANCIES</h3>
+	<form class="form-inline" role="form">
+		<button id="submitButton" type="submit" class="btn btn-success">Get</button>
+	</form>
+	
+  </div>
+   <div id="menu7" class="tab-pane fade">
+    <h3>GET RESERVATIONS</h3>
+	<form class="form-inline" role="form">
+		<button id="submitButton" type="submit" class="btn btn-success">Get</button>
+	</form>
+	
+  </div>
+
+</div>
+ 
+
+
+<p>
+</p>	
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+	
+<div class="navbar navbar-inverse navbar-fixed-bottom">
+</div>
+  </body>
+</html>
