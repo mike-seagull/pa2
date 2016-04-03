@@ -9,4 +9,40 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+    <servlet>
+        <servlet-name>Customers</servlet-name>
+        <servlet-class>api.Customers</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>Customer</servlet-name>
+        <servlet-class>api.Customer</servlet-class>
+    </servlet>    
+    <servlet>
+        <servlet-name>Room</servlet-name>
+        <servlet-class>api.Room</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>Transaction</servlet-name>
+        <servlet-class>api.Transaction</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Customers</servlet-name>
+        <url-pattern>/PA2/Customers/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>Customer</servlet-name>
+        <url-pattern>/PA2/Customer/*</url-pattern>
+    </servlet-mapping>
+        <servlet-mapping>
+        <servlet-name>Room</servlet-name>
+        <url-pattern>/PA2/Room/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>Transaction</servlet-name>
+        <url-pattern>/PA2/Transaction/*</url-pattern>
+    </servlet-mapping>
 </web-app>
