@@ -9,6 +9,28 @@ var currentCustomers = document.getElementById("currentCustomersButton");
 var transactions = document.getElementById("transactionsButton");
 var vacancies = document.getElementById("vacanciesButton");
 var reservations = document.getElementById("reservationsButton");
+/*
+{ 	header: ["", ""]
+	data: [ 
+	        {
+	        	colomn: ""
+	        	value: ""
+	        }
+	      ]
+}
+*/
+function createTable(data) {
+	var table = "<table>" +
+				"<tr>";
+				for (var i=0;i<data.headers.length();i++) {
+					 table +=  "<th>" + data.headers[i] + "</th>";
+				}
+			table += "</tr><tr>";
+				for (var j=0;j<data.data.length;j++) {
+					table += "<td>" + data.data[j].value + "</td>";
+				}
+			table += "</tr> </table>";
+}
 
 create.onclick = function () {
 	var firstname = document.getElementsByName("firstname")[0];
@@ -96,6 +118,18 @@ customerByName.onclick = function () {
      		alert.innerHTML = "Reservation Unsuccessful";
 		  	alert.setAttribute("class", "alert alert-success");
 		  }
+			var table = "<table>" +
+			"<tr>";
+			table +=  "<th>Id</th><th>First Name</th><th>Last Name</th><th>Phone Number</th>";
+			table += "</tr>";
+			for (var j=0;j<data.length;j++) {
+				table += "<tr><td>" + data[j].id + "</td>";
+				table += "<td>" + data[j].first_name + "</td>";
+				table += "<td>" + data[j].last_name + "</td>";
+				table += "<td>" + data[j].phonenumber + "</td></tr> ";
+			}
+			table += "</table>";
+			document.getElementById("table_data").innerHTML = table;
 	});
 	$('a[href="#menu2"]').tab('show');
 };
