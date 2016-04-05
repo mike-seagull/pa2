@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class ClientUI {
-	Requests custReq = new Requests("http://localhost:8080/customer");
-	Requests custsReq = new Requests("http://localhost:8080/customers");
-	Requests roomReq = new Requests("http://localhost:8080/room");
-	Requests transReq = new Requests("http://localhost:8080/transaction");
+	Requests custReq = new Requests("http://localhost:8080/PA2/Customer");
+	Requests custsReq = new Requests("http://localhost:8080/PA2/Customers");
+	Requests roomReq = new Requests("http://localhost:8080/PA2/Room");
+	Requests transReq = new Requests("http://localhost:8080/PA2/Transaction");
 	
 
 	public static void main(String[] args) throws IOException {

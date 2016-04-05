@@ -20,7 +20,6 @@ import clients.MysqlConnector;
 /**
  * Servlet implementation class Customers
  */
-@WebServlet("/Customers")
 public class Customers extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MysqlConnector sql = new MysqlConnector();
@@ -45,11 +44,17 @@ public class Customers extends HttpServlet {
 		 * Returns a list of customers who have the same first or last name specified by the input parameter. 
 		 * This list only contains the customer last name, first name, id, and phone number.
 		 */
-		String name = request.getPathInfo();
-		name = name.substring(1); // remove the slash
+		String name = "";
+		try {
+			name = request.getPathInfo();
+			name = name.substring(1); // remove the slash
+		}catch (NullPointerException npe) {
+			name = "";
+		}
+		
 		List<Map<String, String>> customers = new ArrayList<Map<String, String>>();
 		try {
-			if (name.equals("") || name == null) {
+			if (name == null || name.equals("")) {
 				customers = sql.getCustomersCurrent();
 			}else {
 				customers = sql.getCustomersByName(name);

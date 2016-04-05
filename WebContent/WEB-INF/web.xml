@@ -27,22 +27,22 @@
         <servlet-name>Transaction</servlet-name>
         <servlet-class>api.Transaction</servlet-class>
     </servlet>
-    <servlet-mapping>
+    <servlet-mapping> 
         <servlet-name>Customers</servlet-name>
-        <url-pattern>/PA2/Customers/*</url-pattern>
+        <url-pattern>/Customers/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>Customer</servlet-name>
-        <url-pattern>/PA2/Customer/*</url-pattern>
+        <url-pattern>/Customer/*</url-pattern>
     </servlet-mapping>
         <servlet-mapping>
         <servlet-name>Room</servlet-name>
-        <url-pattern>/PA2/Room/*</url-pattern>
+        <url-pattern>/Room/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>Transaction</servlet-name>
-        <url-pattern>/PA2/Transaction/*</url-pattern>
+        <url-pattern>/Transaction/*</url-pattern>
     </servlet-mapping>
 </web-app>

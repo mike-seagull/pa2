@@ -24,12 +24,19 @@ public class MysqlConnector {
 		db = urlsplit[1];
 		try {
 			System.out.println("Trying to connect to database @ "+ url);
-			conn = DriverManager.getConnection("jdbc:mysql://" + url +"?" + "user=root&password=comp6302&useSSL=false");
+			try {
+				Class.forName("com.mysql.jdbc.Driver").newInstance();
+			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			conn = DriverManager.getConnection("jdbc:mysql://" + url +"?" + "useSSL=false", "root", "comp6302");
 		} catch (SQLException ex) {
+			ex.printStackTrace();
 			System.out.println("Cannot connect to DB: "+ db);
 			try {
 				// connect to the mysql server and create the db
-				conn = DriverManager.getConnection("jdbc:mysql://"+ host + "?" + "user=root&password=comp6302&useSSL=false");
+				conn = DriverManager.getConnection("jdbc:mysql://" + host + "?" + "useSSL=false", "root", "comp6302");
 				System.out.println("Going to try to create DB: "+db);
 				ps = conn.prepareStatement("CREATE DATABASE "+ db);
 				ps.execute();
@@ -42,7 +49,7 @@ public class MysqlConnector {
 		}
 		// lets create the tables
 		try {
-			conn = DriverManager.getConnection("jdbc:mysql://" + url +"?" + "user=root&password=comp6302&useSSL=false");
+			conn = DriverManager.getConnection("jdbc:mysql://" + url + "?" + "useSSL=false", "root", "comp6302");
 			System.out.println("Got Mysql database connection");
 			String customerSql = "CREATE TABLE `pa1_michaelhollister`.`customers` (" +
 								"`id` INT NOT NULL AUTO_INCREMENT," +
@@ -69,7 +76,7 @@ public class MysqlConnector {
 						  "`current_occupant` INT NULL," +
 						  "PRIMARY KEY (`number`)," +
 						  "UNIQUE INDEX `number_UNIQUE` (`number` ASC)," +
-						  "INDEX `id_idx` (`current_occupent` ASC));";
+						  "INDEX `id_idx` (`current_occupant` ASC));";
 			ps = conn.prepareStatement(roomSql);
 			try {
 				ps.execute();
@@ -155,7 +162,7 @@ public class MysqlConnector {
 		return customerId;
 	}
 	public void reserveRoom(int customerId, int roomNumber) throws SQLException {
-		ps = conn.prepareStatement("UPDATE `pa1_michaelhollister`.`rooms` SET `current_occupent`=? WHERE `number`=?;");
+		ps = conn.prepareStatement("UPDATE `pa1_michaelhollister`.`rooms` SET `current_occupant`=? WHERE `number`=?;");
 		ps.setInt(1, customerId);
 		ps.setInt(2, roomNumber);
 		ps.execute();
@@ -202,7 +209,6 @@ public class MysqlConnector {
 		return data;
 	}
 	public List<Map<String, String>> getCustomersByName(String firstOrLastName) throws SQLException {
-		Map<String, String> data = new HashMap<String, String>();
 		ps = conn.prepareStatement("SELECT id, first_name, last_name, phonenumber FROM customers WHERE first_name = ? OR last_name = ?");
 		ps.setString(1, firstOrLastName);
 		ps.setString(2, firstOrLastName);
@@ -210,6 +216,7 @@ public class MysqlConnector {
 		List<Map<String, String>> customers = new ArrayList<Map<String, String>>();
 
 		while(rs.next()) {
+			Map<String, String> data = new HashMap<String, String>();
 			data.put("id", Integer.toString(rs.getInt("id")));
 			data.put("first_name", rs.getString("first_name").toString());
 			data.put("last_name", rs.getString("last_name").toString());
@@ -219,12 +226,11 @@ public class MysqlConnector {
 		return customers;
 	}
 	public List<Map<String, String>> getCustomersCurrent() throws SQLException {
-		Map<String, String> data = new HashMap<String, String>();
-		ps = conn.prepareStatement("SELECT id, first_name, last_name, phonenumber FROM customers WHERE checkin IS NOT NULL AND checkout IS NULL");
+		ps = conn.prepareStatement("SELECT c.id, c.first_name, c.last_name, c.phonenumber from rooms as r, customers as c where r.current_occupant = c.id");
 		rs = ps.executeQuery();
 		List<Map<String, String>> customers = new ArrayList<Map<String, String>>();
-
 		while(rs.next()) {
+			Map<String, String> data = new HashMap<String, String>();
 			data.put("id", Integer.toString(rs.getInt("id")));
 			data.put("first_name", rs.getString("first_name").toString());
 			data.put("last_name", rs.getString("last_name").toString());
@@ -234,7 +240,6 @@ public class MysqlConnector {
 		return customers;
 	}
 	public List<Map<String, String>> getTransactions(String customerId) throws SQLException {
-		Map<String, String> data = new HashMap<String, String>();
 		String sql = "SELECT t.id, r.amount, c.first_name, c.last_name "+
 					"FROM customers AS c, transactions AS t, rooms AS r "+
 					"WHERE c.id = ? "+
@@ -245,38 +250,42 @@ public class MysqlConnector {
 		List<Map<String, String>> transactions = new ArrayList<Map<String, String>>();
 		
 		while(rs.next()) {
+			Map<String, String> data = new HashMap<String, String>();
 			data.put("transactionId", Integer.toString(rs.getInt("t.id")));
 			data.put("amount", rs.getBigDecimal("r.amount").toString());
 			data.put("first_name", rs.getString("c.first_name").toString());
 			data.put("last_name", rs.getString("c.last_name").toString());
+			transactions.add(data);
 		}
 		return transactions;
 		
 	}
 	public List<Map<String, String>> getVacancies() throws SQLException {
-		Map<String, String> data = new HashMap<String, String>();
 		ps = conn.prepareStatement("SELECT number, type FROM rooms WHERE current_occupant IS NULL");
 		rs = ps.executeQuery();
 		List<Map<String, String>> vacancies = new ArrayList<Map<String, String>>();
 
 		while(rs.next()) {
+			Map<String, String> data = new HashMap<String, String>();
 			data.put("number", Integer.toString(rs.getInt("number")));
 			data.put("type", rs.getString("type").toString());
+			vacancies.add(data);
 		}
 		return vacancies;
 		
 	}
 	public List<Map<String, String>> getReservations() throws SQLException {
-		Map<String, String> data = new HashMap<String, String>();
 		ps = conn.prepareStatement("SELECT r.number, c.first_name, c.last_name "+
 								"FROM customers AS c, rooms AS r "+
 								"WHERE r.current_occupant IS NOT NULL AND r.current_occupant = c.id");
 		rs = ps.executeQuery();
 		List<Map<String, String>> reservations = new ArrayList<Map<String, String>>();
 		while(rs.next()) {
+			Map<String, String> data = new HashMap<String, String>();
 			data.put("roomNumber", Integer.toString(rs.getInt("number")));
 			data.put("first_name", rs.getString("first_name").toString());
 			data.put("last_name", rs.getString("last_name").toString());
+			reservations.add(data);
 		}
 		return reservations;
 	}

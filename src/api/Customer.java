@@ -19,7 +19,7 @@ import clients.MysqlConnector;
 /**
  * Servlet implementation class Customer
  */
-@WebServlet("/Customer")
+@WebServlet({"/Customer", "/customer"})
 public class Customer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MysqlConnector sql = new MysqlConnector();
