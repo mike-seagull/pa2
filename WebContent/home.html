@@ -26,14 +26,14 @@
 		<a class="navbar-brand">Hotel Reservation System</a>
 		<div class="navbar-collapse collapse">
 			 <ul class="nav nav-tabs">
-				<li class="active"><a data-toggle="tab" href="#home">CREATE CUSTOMER</a></li>
-				<li><a data-toggle="tab" href="#menu1">RESERVE ROOM</a></li>
-				<li><a data-toggle="tab" href="#menu2">GET CUSTOMER BY ID</a></li>
-				<li><a data-toggle="tab" href="#menu3">GET CUSTOMER BY NAME</a></li>
-				<li><a data-toggle="tab" href="#menu4">GET CURRENT CUSTOMERS</a></li>
-				<li><a data-toggle="tab" href="#menu5">GET TRANSACTIONS</a></li>
-				<li><a data-toggle="tab" href="#menu6">GET VACANCIES</a></li>
-				<li><a data-toggle="tab" href="#menu7">GET RESERVATIONS</a></li>
+				<li id="home_anc" class="active"><a data-toggle="tab" href="#home">CREATE CUSTOMER</a></li>
+				<li><a id="menu1_anc" data-toggle="tab" href="#menu1">RESERVE ROOM</a></li>
+				<li><a id="menu2_anc" data-toggle="tab" href="#menu2">GET CUSTOMER BY ID</a></li>
+				<li><a id="menu3_anc" data-toggle="tab" href="#menu3">GET CUSTOMER BY NAME</a></li>
+				<li><a id="menu4_anc" data-toggle="tab" href="#menu4">GET CURRENT CUSTOMERS</a></li>
+				<li><a id="menu5_anc" data-toggle="tab" href="#menu5">GET TRANSACTIONS</a></li>
+				<li><a id="menu6_anc" data-toggle="tab" href="#menu6">GET VACANCIES</a></li>
+				<li><a id="menu7_anc" data-toggle="tab" href="#menu7">GET RESERVATIONS</a></li>
 			</ul>
 		<div>
    </div>
@@ -124,20 +124,19 @@
 		<br>
 		<button id="customerByNameButton" class="btn btn-success">Get</button>
 	</div>
-	<div id="table_data"></div>
   </div>
    <div id="menu4" class="tab-pane fade">
 	<h3>GET CURRENT CUSTOMERS</h3>
-	<form id="currentCustomers" class="form-inline" role="form">
+	<div id="currentCustomers" class="form-inline" role="form">
 		<button id="currentCustomersButton" class="btn btn-success">Get</button>
-	</form>
+	</div>
 	
   </div>
    <div id="menu5" class="tab-pane fade">
 	<h3>GET TRANSACTIONS</h3>
-	<form id ="transactions" class="form-inline" role="form">
+	<div id ="transactions" class="form-inline" role="form">
 		<button id="transactionsButton" class="btn btn-success">Get</button>
-	</form>
+	</div>
 	
   </div>
    <div id="menu6" class="tab-pane fade">
@@ -154,9 +153,9 @@
 	</div>
 	
   </div>
-
+<div id="table_data"></div>
 </div>
- 
+
 
 
 <p>

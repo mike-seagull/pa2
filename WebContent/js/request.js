@@ -1,6 +1,16 @@
 /**
  * 
  */
+var table_data = document.getElementById("table_data");
+var home = document.getElementById("home_anc");
+var menu1 = document.getElementById("menu1_anc");
+var menu2 = document.getElementById("menu2_anc");
+var menu3 = document.getElementById("menu3_anc");
+var menu4 = document.getElementById("menu4_anc");
+var menu5 = document.getElementById("menu5_anc");
+var menu6 = document.getElementById("menu6_anc");
+var menu7 = document.getElementById("menu7_anc");
+
 var create = document.getElementById("createCustomerButton");
 var reserve = document.getElementById("reserveRoomButton");
 var customerById = document.getElementById("customerByIdButton");
@@ -9,28 +19,35 @@ var currentCustomers = document.getElementById("currentCustomersButton");
 var transactions = document.getElementById("transactionsButton");
 var vacancies = document.getElementById("vacanciesButton");
 var reservations = document.getElementById("reservationsButton");
-/*
-{ 	header: ["", ""]
-	data: [ 
-	        {
-	        	colomn: ""
-	        	value: ""
-	        }
-	      ]
-}
-*/
+
 function createTable(data) {
+
+	if (data[0]) {
 	var table = "<table>" +
 				"<tr>";
-				for (var i=0;i<data.headers.length();i++) {
-					 table +=  "<th>" + data.headers[i] + "</th>";
+				var headers = Object.keys(data[0]);
+				for (var i=0;i<headers.length;i++) {
+					 table +=  "<th>" + headers[i] + "</th>";
 				}
-			table += "</tr><tr>";
-				for (var j=0;j<data.data.length;j++) {
-					table += "<td>" + data.data[j].value + "</td>";
+			table += "</tr>";
+				for (var j=0;j<data.length;j++) {
+					table+="<tr>";
+					
+					for (var key in data[j]) {
+						table += "<td>" + data[j][key] + "</td>";
+					}
+					table+="</tr>";
 				}
-			table += "</tr> </table>";
-}
+			table += "</table>";
+			console.log(table);
+			table_data.innerHTML = table;
+	}else {
+		failureAlert("List is empty");
+	}
+};
+function clearTable() {
+	table_data.innerHTML = "";
+};
 
 create.onclick = function () {
 	var firstname = document.getElementsByName("firstname")[0];
@@ -53,12 +70,7 @@ create.onclick = function () {
 	
 	$.post( "http://localhost:8080/PA2/Customer", customer, function( data ) {
 		  console.log(data.customerId);
-		  var alert = document.getElementById("alert");
-		  alert.innerHTML = "Success! Customer Id =" + data.customerId;
-		  alert.setAttribute("class", "alert alert-success");
-		  $("#alert").fadeTo(2000, 500).slideUp(500, function(){
-    			$("#success-alert").alert('close');
-		  });
+		  successAlert("Customer Id =" + data.customerId)
 	});
 	$('a[href="#home"]').tab('show');
 };
@@ -93,15 +105,7 @@ customerById.onclick = function () {
 	var payload = {"customerId": customerId};
 
 	$.get( "http://localhost:8080/PA2/Customer/"+customerId.value, function( data ) {
-		  console.log(data.success);
-		  var alert = document.getElementById("alert");
-		  if (data.success) {
-			alert.innerHTML = "Reservation Succesful";
-		  	alert.setAttribute("class", "alert alert-success");
-		  } else {
-     		alert.innerHTML = "Reservation Unsuccessful";
-		  	alert.setAttribute("class", "alert alert-success");
-		  }
+ 		createTable(data);
 	});
 	$('a[href="#menu2"]').tab('show');
 };
@@ -131,62 +135,30 @@ customerByName.onclick = function () {
 			table += "</table>";
 			document.getElementById("table_data").innerHTML = table;
 	});
-	$('a[href="#menu2"]').tab('show');
+	$('a[href="#menu3"]').tab('show');
 };
 currentCustomers.onclick = function() {
 	console.log("in currentCustomers");
 	$.get( "http://localhost:8080/PA2/Customers/", function( data ) {
- 		console.log(data.success);
- 		var alert = document.getElementsById("alert");
- 		if (data.success) {
-			alert.innerHTML = "Successful";
-  			alert.setAttribute("class", "alert alert-success");
- 		} else {
-    		alert.innerHTML = "Unsuccessful";
-  			alert.setAttribute("class", "alert alert-success");
- 		}
+ 		createTable(data);
 	});
 	$('a[href="#menu4"]').tab('show');
 };
 transactions.onclick = function() {
 	$.get( "http://localhost:8080/PA2/Transaction/", function( data ) {
- 		console.log(data.success);
- 		var alert = document.getElementById("alert");
- 		if (data.success) {
-			alert.innerHTML = "Successful";
-  			alert.setAttribute("class", "alert alert-success");
- 		} else {
-    		alert.innerHTML = "Unsuccessful";
-  			alert.setAttribute("class", "alert alert-success");
- 		}
+ 		createTable(data);
 	});
 	$('a[href="#menu5"]').tab('show');
 };
 vacancies.onclick = function() {
 	$.get( "http://localhost:8080/PA2/Room/true", function( data ) {
- 		console.log(data.success);
- 		var alert = document.getElementById("alert");
- 		if (data.success) {
-			alert.innerHTML = "Successful";
-  			alert.setAttribute("class", "alert alert-success");
- 		} else {
-    		alert.innerHTML = "Unsuccessful";
-  			alert.setAttribute("class", "alert alert-success");
- 		}
+ 		createTable(data);
 	});
 	$('a[href="#menu6"]').tab('show');
 };
 reservations.onclick = function() {
 	$.get( "http://localhost:8080/PA2/Room/false", function( data ) {
- 		console.log(data.success);
- 		var alert = document.getElementById("alert");
- 		if (data.success) {
-			alert.innerHTML = "Successful";
-  			alert.setAttribute("class", "alert alert-success");
- 		} else {
-    		alert.innerHTML = "Unsuccessful";
-  			alert.setAttribute("class", "alert alert-success");
- 		}
+ 		createTable(data);
 	});
 	$('a[href="#menu7"]').tab('show');
 };
@@ -194,15 +166,16 @@ function successAlert(message) {
 	  var alert = document.getElementById("alert");
 	  alert.innerHTML = "Success! " + message;
 	  alert.setAttribute("class", "alert alert-success");
-	  $("#alert").fadeTo(2000, 500).slideUp(500, function(){
+	  $("#alert").fadeTo(7500, 500).slideUp(500, function(){
 			$("#alert").alert('close');
 	  });
 };
 function failureAlert(message) {
 	  var alert = document.getElementById("alert");
 	  alert.innerHTML = "Error! " + message;
-	  alert.setAttribute("class", "alert alert-alert-warning");
-	  $("#alert").fadeTo(2000, 500).slideUp(500, function(){
+	  alert.setAttribute("class", "alert alert-danger");
+	  $("#alert").fadeTo(7500, 500).slideUp(500, function(){
 			$("#alert").alert('close');
 	  });
 };
+
